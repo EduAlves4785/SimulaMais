@@ -1,0 +1,147 @@
+section{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.navbar:hover{
+    .ball{
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+}
+
+.navbar img {
+  width: 200px;
+  height: 5rem;
+}
+
+.box-logo {
+  display: flex;
+  align-items: center;
+}
+
+.ball{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(115, 246, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  color: white;
+  transition: .5s;
+}
+
+
+.formulario{
+    margin: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    max-height:100%;
+    border: 1px solid black;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.logo-box{
+    display: flex;
+    width: 7rem;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(115, 246, 255);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 30px;
+    transition: .5s;
+}
+
+
+.logo-box:hover{
+    .logo{
+        transition: .5s;
+        box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.75);
+    }
+}
+
+.formulario>div{
+    width: 20rem;
+    margin: .2rem;
+}
+
+.formulario>div>input{
+    margin: 1rem;
+    border:1px solid black;
+    border-radius: 8px;
+    outline: none;
+}
+
+#quantidade_notas{
+    width: 15rem;
+}
+
+.formulario>div>button{
+    margin: 1rem;
+    border: none;
+}
+
+@media (max-width: 600px)
+{
+    .card{
+        max-width: 20rem;
+    }
+
+    footer{
+        bottom: 0;
+        position: fixed;
+        width: 100%;
+    }
+}
+
+.campos-notas{
+    display: flex;
+    flex-direction: column;
+}
+
+.box-nota>input{
+    outline: none;
+    border: 1px solid black;
+    border-radius: 8px;
+    width: 10rem;
+    font-size: 12px;
+    margin: .5rem;
+    padding: .2rem;
+}
+
+.box-nota>button{
+    width: 5rem;
+}
+
+.btn{
+    height: 2rem;
+}
+
+#errorAlert,#resultado-div{
+    display: none;
+    margin-bottom: 5rem;
+}

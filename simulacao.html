@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SimulaMais</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./src/css/simulacao.css">
+</head>
+  <body>
+    <a href="/main.html" style="text-decoration: none;color: black;">
+      <nav class="navbar" >
+        <div class="box-logo">
+          <h1>Simula</h1>
+          <div class="ball">+</div>
+        </div>
+      </nav>
+    </a>
+    <section>
+        <div class="card" style="width: 35rem;">
+            <img src="https://st2.depositphotos.com/4278777/7330/i/450/depositphotos_73308623-stock-photo-shot-of-a-young-woman.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Atenção</h5>
+              <p class="card-text">A análise fornecida não é 100% precisa, pois serve apenas como uma base para entendimento, em vez de garantir uma certeza absoluta.</p>
+            </div>
+        </div>
+        <div class="formulario" id="formulario">
+            <h1>Preencha os campos</h1>
+            <div>
+                <h5>Tipo de operação</h5>
+                <label>Desconto de duplicata</label>
+                <input type="radio" id="tipo-operacao">
+            </div>
+            <div>
+                <h5 id="cliente-h5">Cliente</h5>
+                <label>Novo</label>
+                <input class="form-check-input" type="checkbox" value="" id="cliente_novo">
+                <label>Antigo</label>
+                <input class="form-check-input" type="checkbox" value="" id="cliente_antigo">
+            </div>
+            <div>
+              <h5>Taxa</h5>
+              <label>Insira a base para taxa</label>
+              <input type="text" placeholder="ex: 1.3" id="taxa">
+            </div>
+            <div id="box_notas">
+                <h5>Notas</h5>
+                <label id="mesg-notas">Clique para inserir uma nota</label><br>
+                <div id="campos-notas" class="campos-notas">
+                  
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="btn_notas">Inserir</button>
+            </div>
+            <div id="box_vencimento_notas">
+                <h5>Vencimento das notas</h5>
+                <label id="mesg-vencimento-notas">Coloque o vencimento das notas</label><br>
+                <div id="campos-vencimento-notas" class="campos-notas">
+                  
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm" id="btn_vencimento_notas">Inserir</button>
+            </div>
+            <div>
+                <h5>Sacados</h5>
+                <label>Quantidade de sacados</label>
+                <input type="text" placeholder="ex: 5" id="sacados">
+            </div>
+            <button type="button" class="btn btn-outline-success" id="btn-simular">Simular</button>
+        </div>
+        <div class="alert alert-danger" role="alert" id="errorAlert">
+        </div>
+        <div class="alert alert-success" role="alert" id="resultado-div">
+          
+        </div>
+    </section>
+    <footer class="bg-light text-center text-lg-start">
+      <!-- Copyright -->
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023 Copyright:
+        <a class="text-dark" href="#">SimulaMais</a>
+      </div>
+      <!-- Copyright -->
+    </footer>
+    <!--JavaScript -->
+    <script type="module" src="src/js/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+  </body>
+</html>
