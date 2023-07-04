@@ -1,4 +1,11 @@
 class Validators {
+  validaNomeCedente(nome){
+    if (nome == "") {
+      return false;
+    }
+    return nome;
+  }
+
   validaTaxa(taxa) {
     const regex = /[a-zA-Z]/;
     if (taxa == "") {
@@ -63,6 +70,8 @@ class Validators {
     const notasVencimentoArr = operacao.vencimento;
     let contadorRisco = 0;
     let riscoOperacao = "";
+    let valorBruto=0
+    let valorFinal=0
 
     // Avalia o tipo de cliente
     if (operacao.cliente === "Novo") {
@@ -88,6 +97,8 @@ class Validators {
 
     // Verifica valores das notas
     notasArr.forEach((nota) => {
+      let valornota=parseFloat(nota)
+      valorBruto+=valornota
       if (nota >= 15000) {
         taxaAtual += 0.08;
         contadorRisco += 2;
@@ -133,18 +144,24 @@ class Validators {
       riscoOperacao = "Alto";
     }
 
-    return {taxa:taxaAtual.toFixed(2),risco:riscoOperacao}
+    // Calcula o valor final (valor líquido)
+    let conta1=(valorBruto*taxaAtual)/100
+    valorFinal=valorBruto-conta1.toFixed(2)
+
+    return {taxa:taxaAtual.toFixed(2),risco:riscoOperacao,cedente:operacao.nomeCedente,ValorBruto:valorBruto,ValorFinal:valorFinal}
   }
 }
 
 class Operacao {
+  nomeCedente
   cliente;
   taxa;
   notas;
   vencimento;
   sacados;
 
-  constructor(cliente, taxa, notas, vencimento, sacados) {
+  constructor(nomeCedente,cliente, taxa, notas, vencimento, sacados) {
+    this.nomeCedente=nomeCedente
     this.cliente = cliente;
     this.taxa = taxa;
     this.notas = notas;
@@ -155,6 +172,7 @@ class Operacao {
 
 const validators = new Validators();
 //Campos do formulário
+const nomeCedente=document.getElementById('nome-cedente')
 
 const clienteH5 = document.getElementById("cliente-h5");
 
@@ -164,6 +182,27 @@ const checkboxClienteAntigo = document.getElementById("cliente_antigo");
 const valorTaxa = document.getElementById("taxa");
 
 //Lógica de inserir as notas
+function criarNota(contador){
+  const box=document.createElement("div")
+  box.id = 'box-nota';
+  box.className='box-nota'
+
+  const btnapagar=document.createElement('button')
+  btnapagar.id='btn-apagar'
+  btnapagar.className='btn btn-danger'
+  btnapagar.innerHTML='Apagar'
+
+  box.innerHTML=`<input id="nota-${contador}" type="text" placeholder="Insira o valor da nota">`
+  campoNotas.appendChild(box)
+  box.appendChild(btnapagar)
+
+  btnapagar.addEventListener('click',(e)=>{
+    box.innerHTML=``
+    box.remove()
+  })
+
+}
+
 const botaoInserirNotas = document.getElementById("btn_notas");
 const botaoDeletarNota = document.getElementById("deletarNota");
 const campoNotas = document.getElementById("campos-notas");
@@ -173,39 +212,37 @@ let contador02 = 0;
 botaoInserirNotas.addEventListener("click", () => {
   msgNotas.innerText = "Primeiro insira as notas e depois preencha os valores";
   contador++;
-  campoNotas.innerHTML += `<div class="box-nota" id="box-nota-${contador}">
-      <input id="nota-${contador}" type="text" placeholder="Insira o valor da nota">
-      <button type="button" class="btn btn-danger" onclick="deletarDivPai(this)">Apagar</button>
-    </div>`;
+  criarNota(contador)
 });
 
-//Tornando função global
-window.deletarDivPai = function (botao) {
-  const divPai = botao.parentNode;
-  divPai.parentNode.removeChild(divPai);
-  contador--;
-};
-
-window.deletarDivPai02 = function (botao) {
-  const divPai = botao.parentNode;
-  divPai.parentNode.removeChild(divPai);
-  contador02--;
-};
-
 //Lógica de inserir os vencimentos das notas
-const btnInserirVencimentoNotas = document.getElementById(
-  "btn_vencimento_notas"
-);
+function criarVencimentoNota(contador02){
+  const box=document.createElement("div")
+  box.id = 'box-nota';
+  box.className='box-nota'
+
+  const btnapagar=document.createElement('button')
+  btnapagar.id='btn-apagar'
+  btnapagar.className='btn btn-danger'
+  btnapagar.innerHTML='Apagar'
+
+  box.innerHTML=`<input id="nota-vencimento-${contador02}" type="text" placeholder="Insira os dias">`
+  campoVencimentoNotas.appendChild(box)
+  box.appendChild(btnapagar)
+
+  btnapagar.addEventListener('click',(e)=>{
+    box.innerHTML=``
+    box.remove()
+  })
+}
+
+const btnInserirVencimentoNotas = document.getElementById("btn_vencimento_notas");
 const campoVencimentoNotas = document.getElementById("campos-vencimento-notas");
 const msgVencimentoNotas = document.getElementById("mesg-vencimento-notas");
 btnInserirVencimentoNotas.addEventListener("click", () => {
   contador02++;
-  msgVencimentoNotas.innerText =
-    "Primeiro insira os campos e depois preencha os valores";
-  campoVencimentoNotas.innerHTML += `<div class="box-nota" id="box-nota-${contador02}">
-   <input id="nota-vencimento-${contador02}" type="text" placeholder="Insira o vencimento da nota">
-   <button type="button" class="btn btn-danger" onclick="deletarDivPai02(this)">Apagar</button>
-   </div>`;
+  msgVencimentoNotas.innerText ="Coloque os dias corridos.Ex: 30,60,120 dias";
+  criarVencimentoNota(contador02)
 });
 
 //Valores sobre sacado
@@ -216,16 +253,25 @@ const erroMesage = document.getElementById("errorAlert");
 const resultadoMessage=document.getElementById("resultado-div")
 
 const botaoSimular = document.getElementById("btn-simular");
+//Validando nome cedente
 botaoSimular.addEventListener("click", () => {
-  if (
-    (validators.checkboxValidator(),
-    validators.validaTaxa(valorTaxa.value),
-    validators.validaNotas(contador),
-    validators.validaVencimentoNotas(contador02),
-    validators.validaSacados(qntdSacados.value))
-  ) {
+
+  const nomeCedenteValido = validators.validaNomeCedente(nomeCedente.value);
+  const clienteValido = validators.checkboxValidator();
+  const taxaValida = validators.validaTaxa(valorTaxa.value);
+  const notasValidas = validators.validaNotas(contador);
+  const vencimentoNotasValido = validators.validaVencimentoNotas(contador02);
+  const sacadosValidos = validators.validaSacados(qntdSacados.value);
+
+  if (nomeCedenteValido !== false &&
+    clienteValido !== false &&
+    taxaValida !== false &&
+    notasValidas.length > 0 &&
+    vencimentoNotasValido.length > 0 &&
+    sacadosValidos !== false) {
     erroMesage.style.display = "none";
     const operacao = new Operacao(
+      validators.validaNomeCedente(nomeCedente.value),
       validators.checkboxValidator(),
       validators.validaTaxa(valorTaxa.value),
       validators.validaNotas(contador),
@@ -235,13 +281,18 @@ botaoSimular.addEventListener("click", () => {
     const realizarSimulacao=validators.validaOperacao(operacao)
     resultadoMessage.style.display='flex'
     resultadoMessage.style.flexDirection='column'
-    resultadoMessage.innerHTML=`<h3>Riso da operação: ${realizarSimulacao.risco}</h1>
-    <h5>Taxa final: ${realizarSimulacao.taxa}</h3>`
+    resultadoMessage.innerHTML=`
+    <h3>Riso da operação: ${realizarSimulacao.risco}</h3>
+    <h2>Cedente: ${realizarSimulacao.cedente}</h2>
+    <h3>Valor bruto:R$ ${realizarSimulacao.ValorBruto}</h3>
+    <h3>Valor líquido:R$ ${realizarSimulacao.ValorFinal}</h3>
+    <h4>Taxa final: ${realizarSimulacao.taxa}%</h4>`
+    resultadoMessage.scrollIntoView({ behavior: 'smooth' });
   } else {
     resultadoMessage.style.display='none'
     erroMesage.style.display = "block";
-    erroMesage.innerText =
-      "Preencha os campos novamente e verifique as informações fornecidas";
+    erroMesage.innerText ="Preencha os campos novamente e verifique as informações fornecidas";
+    erroMesage.scrollIntoView({ behavior: 'smooth' });
   }
 });
 

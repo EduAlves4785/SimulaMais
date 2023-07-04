@@ -64,20 +64,17 @@ section {
 
 .btn-box {
   margin-top: 4rem;
-  margin-bottom: 4rem;
-}
-
-@media (max-width: 600px) {
-  footer {
-    bottom: 0;
-    position: fixed;
-    width: 100%;
-  }
+  margin-bottom: 5rem;
 }
 
 @media (min-width: 767px) {
   .carousel {
     display: block;
     text-align: center;
+  }
+  footer {
+    bottom: 0;
+    position: fixed;
+    width: 100%;
   }
 }
