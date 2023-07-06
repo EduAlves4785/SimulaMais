@@ -65,63 +65,60 @@ class Validators {
   }
 
   validaOperacao(operacao) {
-    let taxaAtual =parseFloat(operacao.taxa);
+    let taxaAtual = parseFloat(operacao.taxa);
     const notasArr = operacao.notas;
     const notasVencimentoArr = operacao.vencimento;
     let contadorRisco = 0;
     let riscoOperacao = "";
-    let valorBruto=0
-    let valorFinal=0
-
+    let valorBruto = 0;
+    let valorFinal = 0;
+  
     // Avalia o tipo de cliente
     if (operacao.cliente === "Novo") {
-      taxaAtual += 0.5;
+      taxaAtual += 0.15;
       contadorRisco += 2;
     } else {
       taxaAtual += 0.05;
       contadorRisco += 0.05;
     }
-
+  
     // Verifica quantidade de notas
     const quantidadeNotas = notasArr.length;
-    if (quantidadeNotas < 2) {
+    if (quantidadeNotas <= 2) {
       taxaAtual += 0.2;
       contadorRisco += 2;
-    } else if (quantidadeNotas >= 2 && quantidadeNotas <= 4) {
-      taxaAtual += 0.1;
+    } else if (quantidadeNotas >= 2 && quantidadeNotas <= 4 && operacao.cliente === 'Antigo') {
+      taxaAtual += 0.05;
       contadorRisco += 0.5;
     } else {
-      taxaAtual += 0.05;
+      taxaAtual += 0.1;
       contadorRisco += 0.05;
     }
-
+  
     // Verifica valores das notas
     notasArr.forEach((nota) => {
-      let valornota=parseFloat(nota)
-      valorBruto+=valornota
-      if (nota >= 15000) {
-        taxaAtual += 0.08;
+      let valornota = parseFloat(nota);
+      valorBruto += valornota;
+      if (valornota >= 15000) {
+        taxaAtual += 0.1;
         contadorRisco += 2;
       } else {
         taxaAtual += 0.05;
         contadorRisco += 0.05;
       }
     });
-
+  
     // Verifica média de vencimento das notas
-    const somaVencimento = notasVencimentoArr.reduce(
-      (total, vencimento) => total + vencimento,
-      0
-    );
+    const somaVencimento = notasVencimentoArr.reduce((total, vencimento) => total + vencimento, 0);
     const mediaVencimento = somaVencimento / notasVencimentoArr.length;
     if (mediaVencimento >= 30 && mediaVencimento <= 45) {
-      taxaAtual += 0.05;
+      taxaAtual += 0.02;
       contadorRisco += 0.05;
     } else {
-      taxaAtual += 0.15;
+      taxaAtual += 0.05;
       contadorRisco += 2;
     }
-
+  
     // Verifica quantidade de sacados
     const quantidadeSacados = operacao.sacados;
     if (quantidadeSacados < 2) {
@@ -129,12 +126,12 @@ class Validators {
       contadorRisco += 2;
     } else if (quantidadeSacados >= 2 && quantidadeSacados <= 5) {
       taxaAtual += 0.1;
-      contadorRisco += 0.5;
+      contadorRisco += 0.3;
     } else {
       taxaAtual += 0.05;
-      contadorRisco += 0.05;
+      contadorRisco += 0.02;
     }
-
+  
     // Avalia o risco da operação
     if (contadorRisco >= 1 && contadorRisco <= 3) {
       riscoOperacao = "Baixo";
@@ -143,14 +140,20 @@ class Validators {
     } else {
       riscoOperacao = "Alto";
     }
-
+  
     // Calcula o valor final (valor líquido)
-    let conta1=(valorBruto*taxaAtual)/100
-    valorFinal=valorBruto-conta1.toFixed(2)
-
-    return {taxa:taxaAtual.toFixed(2),risco:riscoOperacao,cedente:operacao.nomeCedente,ValorBruto:valorBruto,ValorFinal:valorFinal}
+    let conta1 = (valorBruto * taxaAtual) / 100;
+    valorFinal = valorBruto - conta1.toFixed(2);
+  
+    return {
+      taxa: taxaAtual.toFixed(2),
+      risco: riscoOperacao,
+      cedente: operacao.nomeCedente,
+      ValorBruto: valorBruto,
+      ValorFinal: valorFinal
+    };
   }
-}
+}  
 
 class Operacao {
   nomeCedente
