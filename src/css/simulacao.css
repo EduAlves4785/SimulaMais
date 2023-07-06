@@ -1,3 +1,9 @@
+body{
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+
 section{
     margin-top: 2rem;
     display: flex;
@@ -44,6 +50,17 @@ section{
   transition: .5s;
 }
 
+.caixa-atencao{
+    padding: 1rem;
+    width: 20rem;
+    background: rgba( 255, 255, 255, 0.35 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 13.5px );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    border-radius: 8px;
+}
 
 .formulario{
     margin: 5rem;
@@ -74,14 +91,6 @@ section{
     font-weight: 700;
     font-size: 30px;
     transition: .5s;
-}
-
-
-.logo-box:hover{
-    .logo{
-        transition: .5s;
-        box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.75);
-    }
 }
 
 .formulario>div{

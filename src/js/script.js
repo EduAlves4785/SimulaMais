@@ -182,7 +182,7 @@ const checkboxClienteAntigo = document.getElementById("cliente_antigo");
 const valorTaxa = document.getElementById("taxa");
 
 //Lógica de inserir as notas
-function criarNota(contador){
+function criarNota(contador01){
   const box=document.createElement("div")
   box.id = 'box-nota';
   box.className='box-nota'
@@ -192,11 +192,12 @@ function criarNota(contador){
   btnapagar.className='btn btn-danger'
   btnapagar.innerHTML='Apagar'
 
-  box.innerHTML=`<input id="nota-${contador}" type="text" placeholder="Insira o valor da nota">`
+  box.innerHTML=`<input id="nota-${contador01}" type="text" placeholder="Insira o valor da nota">`
   campoNotas.appendChild(box)
   box.appendChild(btnapagar)
 
   btnapagar.addEventListener('click',(e)=>{
+    contador--
     box.innerHTML=``
     box.remove()
   })
@@ -216,7 +217,7 @@ botaoInserirNotas.addEventListener("click", () => {
 });
 
 //Lógica de inserir os vencimentos das notas
-function criarVencimentoNota(contador02){
+function criarVencimentoNota(contador){
   const box=document.createElement("div")
   box.id = 'box-nota';
   box.className='box-nota'
@@ -226,11 +227,12 @@ function criarVencimentoNota(contador02){
   btnapagar.className='btn btn-danger'
   btnapagar.innerHTML='Apagar'
 
-  box.innerHTML=`<input id="nota-vencimento-${contador02}" type="text" placeholder="Insira os dias">`
+  box.innerHTML=`<input id="nota-vencimento-${contador}" type="text" placeholder="Insira os dias">`
   campoVencimentoNotas.appendChild(box)
   box.appendChild(btnapagar)
 
   btnapagar.addEventListener('click',(e)=>{
+    contador02--
     box.innerHTML=``
     box.remove()
   })
@@ -282,7 +284,7 @@ botaoSimular.addEventListener("click", () => {
     resultadoMessage.style.display='flex'
     resultadoMessage.style.flexDirection='column'
     resultadoMessage.innerHTML=`
-    <h3>Riso da operação: ${realizarSimulacao.risco}</h3>
+    <h3>Risco da operação: ${realizarSimulacao.risco}</h3>
     <h2>Cedente: ${realizarSimulacao.cedente}</h2>
     <h3>Valor bruto:R$ ${realizarSimulacao.ValorBruto}</h3>
     <h3>Valor líquido:R$ ${realizarSimulacao.ValorFinal}</h3>
