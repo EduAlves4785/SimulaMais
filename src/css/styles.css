@@ -8,6 +8,7 @@ body{
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 .content-apresentacao{
@@ -115,14 +116,6 @@ section {
   align-items: center;
 }
 
-footer{
-  bottom: 0;
-  position: fixed;
-  width: 100%;
-  opacity: .8;
-  color: white;
-}
-
 @media (max-width: 767px) {
   .content-apresentacao{
     flex-direction: column;
@@ -130,5 +123,10 @@ footer{
   }
   .content-apresentacao>div{
     margin: 1rem;
+  }
+  footer{
+    bottom: 0;
+    position: fixed;
+    width: 100%;
   }
 }
